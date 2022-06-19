@@ -29,7 +29,7 @@ jobs:
           bump_each_commit: true
       - name: Tag the commit with the version
         uses: negz/create-tag@v1
-          with:
-            version: v1.0.2
-            message: "Hello World"
-            token: ${{ secrets.APP_GITHUB_TOKEN }}   
+        with:
+          version: v1.0.2
+          message: "Hello World"
+          token: ${{ secrets.APP_GITHUB_TOKEN }}   
