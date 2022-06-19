@@ -33,6 +33,6 @@ jobs:
       - name: Tag the commit with the version
         uses: negz/create-tag@v1
         with:
-          version: ${{steps.code-version.outputs.version}}
+          version: "v${{steps.code-version.outputs.version}}"
           message: ""
           token: ${{ secrets.APP_GITHUB_TOKEN }}   
