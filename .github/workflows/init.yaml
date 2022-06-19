@@ -1,0 +1,26 @@
+name: Release project code
+
+on:
+  push:
+    branches: [main]
+
+env:
+  IMAGE_TAG: gohelloworld.v${{ github.run_number }}.${{ github.run_attempt }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Version the app
+        uses: paulhatch/semantic-version@v4.0.2
+        with:
+          tag_prefix: "v"
+          bump_each_commit: true
+          search_commit_body: true
+          major_pattern: "(MAJOR)"
+          minor_pattern: "(MINOR)"
+          format: "${major}.${minor}.${patch}-prerelease${increment}"

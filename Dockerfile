@@ -17,6 +17,6 @@ RUN apk --update add ca-certificates
 
 WORKDIR /app
 
-COPY --from=build /app/main .
+COPY --from=builder /app/main .
 
 ENTRYPOINT [ "/app/main" ]
