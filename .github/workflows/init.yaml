@@ -24,11 +24,10 @@ jobs:
           major_pattern: "(MAJOR)"
           minor_pattern: "(MINOR)"
           format: "${major}.${minor}.${patch}"
-          # namespace: gohelloworld
           short_tags: false
           bump_each_commit: true
       - name: Echo the app version
-        run: echo ${version}
+        run: echo ${{version}}
       # - name: Tag the commit with the version
       #   uses: negz/create-tag@v1
       #   with:
