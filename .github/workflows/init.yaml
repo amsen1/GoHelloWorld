@@ -28,8 +28,8 @@ jobs:
           short_tags: false
           bump_each_commit: true
       - name: Tag the commit
-        uses: hole19/git-tag-action@v1.0
-        with:
-          TAG: v1.0.1
-          GITHUB_TOKEN: $APP_GITHUB_TOKEN
-        
+        uses: negz/create-tag@v1
+          with:
+            version: v1.0.2
+            message: "Hello World"
+            token: ${{ secrets.APP_GITHUB_TOKEN }}        
