@@ -7,6 +7,8 @@ import (
 	"time"
 )
 
+// App initialization and run to be managed by this method
+// failure of Run needs to be handled.
 func Run(log *log.Logger) {
 
 	log.Println("Starting to run the GoHelloWorls application...")

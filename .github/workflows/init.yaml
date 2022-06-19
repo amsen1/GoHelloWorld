@@ -5,7 +5,8 @@ on:
     branches: [main]
 
 env:
-  IMAGE_TAG: gohelloworld.v${{ github.run_number }}.${{ github.run_attempt }}
+  IMAGE_TAG: gohelloworld
+  IMAGE_VERSION: v${{ github.run_number }}.${{ github.run_attempt }}
 
 jobs:
   build:
