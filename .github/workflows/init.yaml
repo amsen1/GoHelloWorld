@@ -14,10 +14,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
+        id: code-checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Version the app
+        id: code-version
         uses: paulhatch/semantic-version@v4.0.3
         with:
           tag_prefix: "v"
@@ -27,7 +29,7 @@ jobs:
           short_tags: false
           bump_each_commit: true
       - name: Echo the app version
-        run: echo ${{version}}
+        run: echo ${{steps.code-version.outputs.version}}
       # - name: Tag the commit with the version
       #   uses: negz/create-tag@v1
       #   with:
