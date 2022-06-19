@@ -28,11 +28,11 @@ jobs:
           format: "${major}.${minor}.${patch}"
           short_tags: false
           bump_each_commit: true
-      - name: Echo the app version
-        run: echo ${{steps.code-version.outputs.version}}
-      # - name: Tag the commit with the version
-      #   uses: negz/create-tag@v1
-      #   with:
-      #     version: ${{ version }}
-      #     message: ""
-      #     token: ${{ secrets.APP_GITHUB_TOKEN }}   
+      # - name: Echo the app version
+      #   run: echo ${{steps.code-version.outputs.version}}
+      - name: Tag the commit with the version
+        uses: negz/create-tag@v1
+        with:
+          version: ${{steps.code-version.outputs.version}}
+          message: ""
+          token: ${{ secrets.APP_GITHUB_TOKEN }}   
