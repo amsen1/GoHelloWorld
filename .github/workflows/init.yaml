@@ -13,12 +13,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout the code
+
+      # Checkout the code from github repository
+      # To include the history and tags, specify the fetch-depth parameter in your checkout action declaration. 
+      # Specify zero to pull the full history and tags.
+      - name: Checkout the code 🛎
         id: code-checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Version the app
+      
+      # This action produces a semantic version for a repository using the repository's 
+      # git history without ever requiring a human to choose or 
+      # manually assign the version number.
+      - name: Version the app 👩‍💻
         id: code-version
         uses: paulhatch/semantic-version@v4.0.3
         with:
@@ -28,11 +36,12 @@ jobs:
           format: "${major}.${minor}.${patch}"
           short_tags: false
           bump_each_commit: true
-      # - name: Echo the app version
-      #   run: echo ${{steps.code-version.outputs.version}}
-      - name: Tag the commit with the version
+      
+      # Tag the commit with the version number derived above.
+      # Needs github token to create the tag
+      - name: Tag the commit with the version 🏷
         uses: negz/create-tag@v1
         with:
           version: "v${{steps.code-version.outputs.version}}"
           message: ""
-          token: ${{ secrets.APP_GITHUB_TOKEN }}   
+          token: ${{ secrets.APP_GITHUB_TOKEN }}
