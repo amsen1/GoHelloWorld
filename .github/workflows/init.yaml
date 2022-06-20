@@ -44,4 +44,6 @@ jobs:
         with:
           version: "v${{steps.code-version.outputs.version}}"
           message: ""
-          token: ${{ secrets.APP_GITHUB_TOKEN }}
+          token: ${{ secrets.github_token }}
+
+  
