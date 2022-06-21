@@ -8,6 +8,9 @@ env:
   IMAGE_TAG: gohelloworld
   IMAGE_VERSION: v${{ github.run_number }}.${{ github.run_attempt }}
   APP_GITHUB_TOKEN: ${{ secrets.APP_GITHUB_TOKEN }}
+  ARTIFACTORY_HOST: https://artifactory.build.ingka.ikea.com/artifactory
+  ARTIFACTORY_USER: ${{ secrets.ARTIFACTORYUSER }}
+  ARTIFACTORY_PASS: ${{ secrets.ARTIFACTORYPASS }}
 
 jobs:
   build:
@@ -46,4 +49,15 @@ jobs:
           message: ""
           token: ${{ secrets.github_token }}
 
-  
+      # Docker release starts
+      # Login to Docker
+      - name: Login to Docker 🐋
+        run: docker login $ARTIFACTORY_HOST -u $ARTIFACTORY_USER -p $ARTIFACTORY_PASS
+
+      # Build the docker image
+      - name: Build the docker image 🐋
+        run: docker image build --tag artifactory.build.ingka.ikea.com/ingka-docker-shared-local/go-hello-world/releases:$IMAGE_TAG-v${{steps.code-version.outputs.version}} .
+
+      # Push the docker image
+      - name: Push the docker image 🐋
+        run: docker push artifactory.build.ingka.ikea.com/ingka-docker-shared-local/go-hello-world/releases:$IMAGE_TAG-v${{steps.code-version.outputs.version}}
