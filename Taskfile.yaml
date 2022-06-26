@@ -1,0 +1,12 @@
+version: '3'
+
+tasks:
+  clean:
+    cmds:
+      # - docker-compose down
+      - docker image prune -a -f
+      - docker volume prune -f
+
+  build:
+    cmds:
+      - docker build . -t go-hello-world

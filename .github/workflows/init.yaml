@@ -3,6 +3,8 @@ name: Release project code
 on:
   push:
     branches: [main]
+    paths:
+      - 'src/**'
 
 env:
   IMAGE_TAG: gohelloworld

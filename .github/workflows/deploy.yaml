@@ -1,0 +1,12 @@
+name: Deploy a K8s deployment to MGKE
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        type: choice
+        description: Deploy to
+        options:
+          - DEV
+          - STAGE
+          - PROD
