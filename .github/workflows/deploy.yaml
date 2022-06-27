@@ -16,6 +16,10 @@ on:
         description: 'Test scenario tags'
         required: false 
         type: boolean
+      test_input1:
+        description: 'Enter anything.'
+        required: true
+        default: 'test1'
 
 jobs:
   log-the-inputs:
@@ -24,6 +28,8 @@ jobs:
       - run: |
           echo "Log level: $LEVEL"
           echo "Tags: $TAGS"
+          echo "StringInput: $TEST_INPUT1"
         env:
           LEVEL: ${{ inputs.logLevel }}
           TAGS: ${{ inputs.tags }}
+          TEST_INPUT1: ${{inputs.test_input1}}
