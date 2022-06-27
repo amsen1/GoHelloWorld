@@ -1,4 +1,4 @@
-name: Deploy a K8s deployment to MGKE
+name: Deploy to MGKE
 
 on:
   workflow_dispatch:
