@@ -3,35 +3,29 @@ name: Deploy to MGKE
 on:
   workflow_dispatch:
     inputs:
-      logLevel:
-        description: 'Log level'     
+      env:
+        description: 'Deploy to Environment:'     
         required: true
-        default: 'warning' 
+        default: 'DEV' 
         type: choice
         options:
-        - info
-        - warning
-        - debug
-      tags:
-        description: 'Test scenario tags'
-        required: false 
-        type: boolean
-      test_input1:
-        description: 'Enter anything.'
-        required: true
-        default: 'test1'
+        - DEV
+        - STAGE
+        - PROD
+      comments:
+        description: 'Deployment comments:'
+        required: false
+        default: 'deploying artifact '
 
 jobs:
   log-the-inputs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          echo "Log level: $LEVEL"
-          echo "Tags: $TAGS"
-          echo "StringInput: $TEST_INPUT1"
+          echo "Environment: $ENV"
+          echo "Comments: $COMMENTS"
           echo "Github path: ${{ github.action_path	}}"
           echo "Github ref: ${{ github.ref }}"
         env:
-          LEVEL: ${{ inputs.logLevel }}
-          TAGS: ${{ inputs.tags }}
-          TEST_INPUT1: ${{inputs.test_input1}}
+          ENV: ${{ inputs.env }}
+          COMMENTS: ${{ inputs.comments }}
