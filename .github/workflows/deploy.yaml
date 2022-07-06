@@ -29,6 +29,8 @@ jobs:
           echo "Log level: $LEVEL"
           echo "Tags: $TAGS"
           echo "StringInput: $TEST_INPUT1"
+          echo "Github path: ${{ github.action_path	}}"
+          echo "Github ref: ${{ github.ref }}"
         env:
           LEVEL: ${{ inputs.logLevel }}
           TAGS: ${{ inputs.tags }}
