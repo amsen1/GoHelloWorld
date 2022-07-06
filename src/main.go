@@ -20,7 +20,6 @@ func Run(log *log.Logger) {
 }
 
 // main
-//more changes
 func main() {
 	log := *log.New(os.Stdout, "go-hello-world: ", log.LstdFlags)
 	fmt.Println("Initializing GoHelloWorld!!")
