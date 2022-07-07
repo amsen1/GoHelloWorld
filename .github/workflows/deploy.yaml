@@ -58,7 +58,7 @@ jobs:
           echo "Environment: $ENV"
           echo "Comments: $COMMENTS"
           echo "Image version: $IMAGE_VERSION"
-          echo "Repo url: $ARTIFACTORY_IMAGEPATH:$IMAGE_TAG-${IMAGE_VERSION}"
+          echo "Repo url: $ARTIFACTORY_IMAGEPATH:$IMAGE_TAG-$IMAGE_VERSION"
         env:
           ENV: ${{ inputs.env }}
           COMMENTS: ${{ inputs.comments }}
