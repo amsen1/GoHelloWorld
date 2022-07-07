@@ -41,7 +41,7 @@ jobs:
           fetch-depth: 0
 
       - name: Set env varialbles
-        run: echo "IMAGE_VERSION=${echo '${{ github.ref }}' | sed -e 's/refs\/tags\///g' | sed -e 's/\//-/g' }" >> $GITHUB_ENV
+        run: echo "IMAGE_VERSION=${echo '${{ github.ref }}'" >> $GITHUB_ENV
 
       # - name: Replace tokens in deployment yml
       #   uses: cschleiden/replace-tokens@v1
