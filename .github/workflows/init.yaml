@@ -45,7 +45,7 @@ jobs:
 
       # Set the image version as an environment variable
       - name: Set env varialbles
-        run: echo "IMAGE_VERSION=${{steps.code-version.outputs.version}}" >> $GITHUB_ENV
+        run: echo "IMAGE_VERSION=v${{steps.code-version.outputs.version}}" >> $GITHUB_ENV
 
       - name: Test
         run: echo $IMAGE_VERSION
@@ -55,7 +55,7 @@ jobs:
       - name: Tag the commit with the version 🏷
         uses: negz/create-tag@v1
         with:
-          version: "$IMAGE_VERSION"
+          version: $IMAGE_VERSION
           message: ""
           token: ${{ secrets.github_token }}
 
