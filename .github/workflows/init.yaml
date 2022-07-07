@@ -55,7 +55,7 @@ jobs:
       - name: Tag the commit with the version 🏷
         uses: negz/create-tag@v1
         with:
-          version: $IMAGE_VERSION
+          version: "v${{steps.code-version.outputs.version}}"
           message: ""
           token: ${{ secrets.github_token }}
 
