@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gohelloworld-app
+  labels:
+    app: gohelloworld-app
+spec:
+  selector:
+    matchLabels:
+      app: gohelloworld-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: gohelloworld-app
+    spec:
+      serviceAccountName: fom-mgke-sa
+      shareProcessNamespace: true
+      nodeSelector:
+        apps: run
+      imagePullSecrets:
+        - name: sukol6-artifactory
+      containers:  
+        - name: gohelloworld-app
+          image: artifactory.build.ingka.ikea.com/ingka-docker-shared-local/go-hello-world-v1.3.9
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "1000m"
+            limits:
+              memory: "1024Mi"
+              cpu: "2000m"
+          ports:
+            - containerPort: 9001
+          securityContext:
+            runAsUser: 1000
+            runAsNonRoot: true
+          #readinessProbe:
+          #  tcpSocket:
+          #    port: 9000
+          #  initialDelaySeconds: 5
+          #  periodSeconds: 10
+          #livenessProbe:
+          #  tcpSocket:
+          #    port: 9000
+          #  initialDelaySeconds: 40
+          #  periodSeconds: 20
+            

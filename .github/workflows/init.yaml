@@ -11,6 +11,7 @@ env:
   IMAGE_VERSION: v${{ github.run_number }}.${{ github.run_attempt }}
   APP_GITHUB_TOKEN: ${{ secrets.APP_GITHUB_TOKEN }}
   ARTIFACTORY_HOST: https://artifactory.build.ingka.ikea.com/artifactory
+  ARTIFACTORY_IMAGEPATH: artifactory.build.ingka.ikea.com/ingka-docker-shared-local/go-hello-world/releases
   ARTIFACTORY_USER: ${{ secrets.ARTIFACTORYUSER }}
   ARTIFACTORY_PASS: ${{ secrets.ARTIFACTORYPASS }}
 
@@ -41,13 +42,17 @@ jobs:
           format: "${major}.${minor}.${patch}"
           short_tags: false
           bump_each_commit: true
+
+      # Set the image version as an environment variable
+      - name: Set env varialbles
+        run: echo "IMAGE_VERSION=v${{steps.code-version.outputs.version}}" >> $GITHUB_ENV
       
       # Tag the commit with the version number derived above.
       # Needs github token to create the tag
       - name: Tag the commit with the version 🏷
         uses: negz/create-tag@v1
         with:
-          version: "v${{steps.code-version.outputs.version}}"
+          version: "${IMAGE_VERSION}"
           message: ""
           token: ${{ secrets.github_token }}
 
@@ -58,8 +63,8 @@ jobs:
 
       # Build the docker image
       - name: Build the docker image 🐋
-        run: docker image build --tag artifactory.build.ingka.ikea.com/ingka-docker-shared-local/go-hello-world/releases:$IMAGE_TAG-v${{steps.code-version.outputs.version}} .
+        run: docker image build --tag ${ARTIFACTORY_IMAGEPATH}:${IMAGE_TAG}-${IMAGE_VERSION} .
 
       # Push the docker image
       - name: Push the docker image 🐋
-        run: docker push artifactory.build.ingka.ikea.com/ingka-docker-shared-local/go-hello-world/releases:$IMAGE_TAG-v${{steps.code-version.outputs.version}}
+        run: docker push ${ARTIFACTORY_IMAGEPATH}:${IMAGE_TAG}-${IMAGE_VERSION}

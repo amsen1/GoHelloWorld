@@ -10,6 +10,7 @@ on:
         type: choice
         options:
         - DEV
+        - TEST
         - STAGE
         - PROD
       comments:
@@ -17,15 +18,47 @@ on:
         required: false
         default: 'deploying artifact '
 
+env:
+  IMAGE_TAG: gohelloworld
+  IMAGE_VERSION: v${{ github.run_number }}.${{ github.run_attempt }}
+  APP_GITHUB_TOKEN: ${{ secrets.APP_GITHUB_TOKEN }}
+  ARTIFACTORY_HOST: https://artifactory.build.ingka.ikea.com/artifactory
+  ARTIFACTORY_IMAGEPATH: artifactory.build.ingka.ikea.com/ingka-docker-shared-local/go-hello-world/releases
+  ARTIFACTORY_USER: ${{ secrets.ARTIFACTORYUSER }}
+  ARTIFACTORY_PASS: ${{ secrets.ARTIFACTORYPASS }}
+
 jobs:
-  log-the-inputs:
+  deploy-artifact:
     runs-on: ubuntu-latest
     steps:
+      # Checkout the code from github repository
+      # To include the history and tags, specify the fetch-depth parameter in your checkout action declaration. 
+      # Specify zero to pull the full history and tags.
+      - name: Checkout the code 🛎
+        id: code-checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set env varialbles
+        run: echo "IMAGE_VERSION=${echo ${{ github.ref }} | sed -e "s/refs\/tags\///g" | sed -e "s/\//-/g" }" >> $GITHUB_ENV
+
+      # - name: Replace tokens in deployment yml
+      #   uses: cschleiden/replace-tokens@v1
+      #   with:
+      #     files: '["kubernetes/*.yaml"]'
+      #     tokenPrefix: __ # optional, default is #{
+      #     tokenSuffix: __ # optional, default is }#
+      #   env:
+      #     DOCKER_REPOSITORY: ${{ env.DOCKER_REPOSITORY }}
+      #     IMAGE_NAME: ${{ env.IMAGE_NAME }}
+      #     IMAGE_TAG: ${{ env.IMAGE_TAG }}
+
       - run: |
           echo "Environment: $ENV"
           echo "Comments: $COMMENTS"
-          echo "Github path: ${{ github.action_path	}}"
-          echo "Github ref: ${{ github.ref }}"
+          echo "Image version: $IMAGE_VERSION"
+          echo "Repo url: $ARTIFACTORY_IMAGEPATH:$IMAGE_TAG-${IMAGE_VERSION}"
         env:
           ENV: ${{ inputs.env }}
           COMMENTS: ${{ inputs.comments }}
