@@ -60,14 +60,14 @@ jobs:
           token: ${{ secrets.github_token }}
 
       # Docker release starts
-      # Login to Docker
-      # - name: Login to Docker 🐋
-      #   run: docker login $ARTIFACTORY_HOST -u $ARTIFACTORY_USER -p $ARTIFACTORY_PASS
+      Login to Docker
+      - name: Login to Docker 🐋
+        run: docker login $ARTIFACTORY_HOST -u $ARTIFACTORY_USER -p $ARTIFACTORY_PASS
 
       # Build the docker image
-      # - name: Build the docker image 🐋
-      #   run: docker image build --tag ${ARTIFACTORY_IMAGEPATH}:$IMAGE_TAG-${IMAGE_VERSION} .
+      - name: Build the docker image 🐋
+        run: docker image build --tag $ARTIFACTORY_IMAGEPATH:$IMAGE_TAG-$IMAGE_VERSION .
 
       # Push the docker image
-      # - name: Push the docker image 🐋
-      #   run: docker push ${ARTIFACTORY_IMAGEPATH}:${IMAGE_TAG}-${IMAGE_VERSION}
+      - name: Push the docker image 🐋
+        run: docker push $ARTIFACTORY_IMAGEPATH:$IMAGE_TAG-$IMAGE_VERSION
