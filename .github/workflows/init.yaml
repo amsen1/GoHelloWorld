@@ -52,12 +52,12 @@ jobs:
       
       # Tag the commit with the version number derived above.
       # Needs github token to create the tag
-      # - name: Tag the commit with the version 🏷
-      #   uses: negz/create-tag@v1
-      #   with:
-      #     version: "${IMAGE_VERSION}"
-      #     message: ""
-      #     token: ${{ secrets.github_token }}
+      - name: Tag the commit with the version 🏷
+        uses: negz/create-tag@v1
+        with:
+          version: "$IMAGE_VERSION"
+          message: ""
+          token: ${{ secrets.github_token }}
 
       # Docker release starts
       # Login to Docker
