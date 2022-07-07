@@ -60,7 +60,7 @@ jobs:
           token: ${{ secrets.github_token }}
 
       # Docker release starts
-      Login to Docker
+      # Login to Docker
       - name: Login to Docker 🐋
         run: docker login $ARTIFACTORY_HOST -u $ARTIFACTORY_USER -p $ARTIFACTORY_PASS
 
