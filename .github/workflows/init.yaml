@@ -3,8 +3,8 @@ name: Release project code
 on:
   push:
     branches: [main]
-    paths:
-      - 'src/**'
+    # paths:
+    #   - 'src/**'
 
 env:
   IMAGE_TAG: gohelloworld
@@ -46,25 +46,28 @@ jobs:
       # Set the image version as an environment variable
       - name: Set env varialbles
         run: echo "IMAGE_VERSION=v${{steps.code-version.outputs.version}}" >> $GITHUB_ENV
+
+      - name: Test
+        run: echo $IMAGE_VERSION
       
       # Tag the commit with the version number derived above.
       # Needs github token to create the tag
-      - name: Tag the commit with the version 🏷
-        uses: negz/create-tag@v1
-        with:
-          version: "${IMAGE_VERSION}"
-          message: ""
-          token: ${{ secrets.github_token }}
+      # - name: Tag the commit with the version 🏷
+      #   uses: negz/create-tag@v1
+      #   with:
+      #     version: "${IMAGE_VERSION}"
+      #     message: ""
+      #     token: ${{ secrets.github_token }}
 
       # Docker release starts
       # Login to Docker
-      - name: Login to Docker 🐋
-        run: docker login $ARTIFACTORY_HOST -u $ARTIFACTORY_USER -p $ARTIFACTORY_PASS
+      # - name: Login to Docker 🐋
+      #   run: docker login $ARTIFACTORY_HOST -u $ARTIFACTORY_USER -p $ARTIFACTORY_PASS
 
       # Build the docker image
-      - name: Build the docker image 🐋
-        run: docker image build --tag ${ARTIFACTORY_IMAGEPATH}:${IMAGE_TAG}-${IMAGE_VERSION} .
+      # - name: Build the docker image 🐋
+      #   run: docker image build --tag ${ARTIFACTORY_IMAGEPATH}:$IMAGE_TAG-${IMAGE_VERSION} .
 
       # Push the docker image
-      - name: Push the docker image 🐋
-        run: docker push ${ARTIFACTORY_IMAGEPATH}:${IMAGE_TAG}-${IMAGE_VERSION}
+      # - name: Push the docker image 🐋
+      #   run: docker push ${ARTIFACTORY_IMAGEPATH}:${IMAGE_TAG}-${IMAGE_VERSION}
