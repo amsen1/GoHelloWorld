@@ -22,7 +22,7 @@ spec:
         - name: sukol6-artifactory
       containers:  
         - name: gohelloworld-app
-          image: artifactory.build.ingka.ikea.com/ingka-docker-shared-local/go-hello-world-v1.3.9
+          image: __ARTIFACTORY_IMAGEPATH__/__IMAGE_TAG__-__IMAGE_VERSION__
           imagePullPolicy: IfNotPresent
           resources:
             requests:

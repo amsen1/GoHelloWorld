@@ -19,7 +19,7 @@ on:
         default: 'deploying artifact '
 
 env:
-  IMAGE_TAG: gohelloworld
+  IMAGE_NAME: gohelloworld
   IMAGE_VERSION: v${{ github.run_number }}.${{ github.run_attempt }}
   APP_GITHUB_TOKEN: ${{ secrets.APP_GITHUB_TOKEN }}
   ARTIFACTORY_HOST: https://artifactory.build.ingka.ikea.com/artifactory
@@ -43,22 +43,22 @@ jobs:
       - name: Set env varialbles
         run: echo "IMAGE_VERSION=${{ github.ref }}" | sed -e "s/refs\/tags\///g" | sed -e "s/\//-/g" >> $GITHUB_ENV
 
-      # - name: Replace tokens in deployment yml
-      #   uses: cschleiden/replace-tokens@v1
-      #   with:
-      #     files: '["kubernetes/*.yaml"]'
-      #     tokenPrefix: __ # optional, default is #{
-      #     tokenSuffix: __ # optional, default is }#
-      #   env:
-      #     DOCKER_REPOSITORY: ${{ env.DOCKER_REPOSITORY }}
-      #     IMAGE_NAME: ${{ env.IMAGE_NAME }}
-      #     IMAGE_TAG: ${{ env.IMAGE_TAG }}
+      - name: Replace tokens in deployment yml
+        uses: cschleiden/replace-tokens@v1
+        with:
+          files: '["k8s/*.yaml"]'
+          tokenPrefix: __ # optional, default is #{
+          tokenSuffix: __ # optional, default is }#
+        env:
+          ARTIFACTORY_IMAGEPATH: ${{ env.ARTIFACTORY_IMAGEPATH }}
+          IMAGE_NAME: ${{ env.IMAGE_NAME }}
+          IMAGE_VERSION: ${{ env.IMAGE_VERSION }}
 
       - run: |
           echo "Environment: $ENV"
           echo "Comments: $COMMENTS"
           echo "Image version: $IMAGE_VERSION"
-          echo "Repo url: $ARTIFACTORY_IMAGEPATH:$IMAGE_TAG-$IMAGE_VERSION"
+          echo "Repo url: $ARTIFACTORY_IMAGEPATH:$IMAGE_NAME-$IMAGE_VERSION"
         env:
           ENV: ${{ inputs.env }}
           COMMENTS: ${{ inputs.comments }}

@@ -7,7 +7,7 @@ on:
     #   - 'src/**'
 
 env:
-  IMAGE_TAG: gohelloworld
+  IMAGE_NAME: gohelloworld
   IMAGE_VERSION: v${{ github.run_number }}.${{ github.run_attempt }}
   APP_GITHUB_TOKEN: ${{ secrets.APP_GITHUB_TOKEN }}
   ARTIFACTORY_HOST: https://artifactory.build.ingka.ikea.com/artifactory
@@ -66,8 +66,8 @@ jobs:
 
       # Build the docker image
       - name: Build the docker image 🐋
-        run: docker image build --tag $ARTIFACTORY_IMAGEPATH:$IMAGE_TAG-$IMAGE_VERSION .
+        run: docker image build --tag $ARTIFACTORY_IMAGEPATH:$IMAGE_NAME-$IMAGE_VERSION .
 
       # Push the docker image
       - name: Push the docker image 🐋
-        run: docker push $ARTIFACTORY_IMAGEPATH:$IMAGE_TAG-$IMAGE_VERSION
+        run: docker push $ARTIFACTORY_IMAGEPATH:$IMAGE_NAME-$IMAGE_VERSION
