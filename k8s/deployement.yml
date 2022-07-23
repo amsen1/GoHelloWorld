@@ -19,10 +19,10 @@ spec:
       nodeSelector:
         apps: run
       imagePullSecrets:
-        - name: sukol6-artifactory
+        - name: amsen1-artifactory
       containers:  
         - name: gohelloworld-app
-          image: __ARTIFACTORY_IMAGEPATH__/__IMAGE_TAG__-__IMAGE_VERSION__
+          image: __ARTIFACTORY_IMAGEPATH__:__IMAGE_TAG__-__IMAGE_VERSION__
           imagePullPolicy: IfNotPresent
           resources:
             requests:
